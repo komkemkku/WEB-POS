@@ -155,7 +155,7 @@ async function checkUserRole() {
       const backBtn = document.getElementById("backBtn");
       if (backBtn) {
         backBtn.classList.remove("d-none");
-        backBtn.onclick = () => (window.location = "/frontend/backoffice.html");
+        backBtn.onclick = () => (window.location = "/backoffice.html");
       }
     }
     const greet = document.getElementById("userGreeting");
@@ -308,10 +308,25 @@ function updateCartRemark(idx, val) {
 }
 
 function clearCart() {
-  if (confirm("คุณต้องการยกเลิกบิลหรือไม่?")) {
-    cart = [];
-    renderCart();
-  }
+  Swal.fire({
+    title: 'ยืนยันการยกเลิกบิล?',
+    text: "คุณต้องการล้างตะกร้าสินค้าทั้งหมดใช่หรือไม่",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'ใช่, ยกเลิกบิล!',
+    cancelButtonText: 'ไม่',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // ใส่โค้ดล้างตะกร้าตรงนี้
+      // เช่น cart = []; renderCart();
+      Swal.fire(
+        'ยกเลิกบิลแล้ว!',
+        'ตะกร้าสินค้าถูกล้างเรียบร้อย',
+        'success'
+      );
+    }
+  });
 }
 
 function renderCart() {
