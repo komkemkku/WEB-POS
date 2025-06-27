@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     printerTableBody.innerHTML = "";
     emptyPrinterAlert.classList.add("d-none");
     try {
-      const res = await fetch("http://localhost:3000/api/printers", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/printers", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
       is_active: document.getElementById("printerStatus").value === "true",
     };
     try {
-      let url = "http://localhost:3000/api/printers";
+      let url = "https://api-pos-production-751a.up.railway.app/api/printers";
       let method = "POST";
       if (id) {
         url += "/" + id;
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!printerToDeleteId) return;
       try {
         const res = await fetch(
-          `http://localhost:3000/api/printers/${printerToDeleteId}`,
+          `https://api-pos-production-751a.up.railway.app/api/printers/${printerToDeleteId}`,
           {
             method: "DELETE",
             headers: { Authorization: "Bearer " + token },

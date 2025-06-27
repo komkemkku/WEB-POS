@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     customerTableBody.innerHTML = "";
     emptyCustomerAlert.classList.add("d-none");
     try {
-      const res = await fetch("http://localhost:3000/api/customers", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/customers", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
       point: +document.getElementById("custPoint").value || 0,
     };
     try {
-      let url = "http://localhost:3000/api/customers";
+      let url = "https://api-pos-production-751a.up.railway.app/api/customers";
       let method = "POST";
       if (id) {
         url += "/" + id;
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!customerToDeleteId) return;
     try {
       const res = await fetch(
-        `http://localhost:3000/api/customers/${customerToDeleteId}`,
+        `https://api-pos-production-751a.up.railway.app/api/customers/${customerToDeleteId}`,
         {
           method: "DELETE",
           headers: { Authorization: "Bearer " + token },

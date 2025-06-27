@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     prodCategory.innerHTML = '<option value="">-- เลือกประเภท --</option>';
     try {
       const res = await fetch(
-        "http://localhost:3000/api/categories?activeOnly=true",
+        "https://api-pos-production-751a.up.railway.app/api/categories?activeOnly=true",
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     productTableBody.innerHTML = "";
     emptyProductAlert.classList.add("d-none");
     try {
-      const res = await fetch("http://localhost:3000/api/products", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/products", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // --- ตรวจสอบบาร์โค้ดซ้ำ ---
     if (barcode) {
       const check = await fetch(
-        `http://localhost:3000/api/products/barcode/${barcode}${
+        `https://api-pos-production-751a.up.railway.app/api/products/barcode/${barcode}${
           id ? `?exclude=${id}` : ""
         }`,
         {
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
       is_active: document.getElementById("prodStatus").value === "true",
     };
     try {
-      let url = "http://localhost:3000/api/products";
+      let url = "https://api-pos-production-751a.up.railway.app/api/products";
       let method = "POST";
       if (id) {
         url += "/" + id;
@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!productToDeleteId) return;
       try {
         const res = await fetch(
-          `http://localhost:3000/api/products/${productToDeleteId}`,
+          `https://api-pos-production-751a.up.railway.app/api/products/${productToDeleteId}`,
           {
             method: "DELETE",
             headers: { Authorization: "Bearer " + token },

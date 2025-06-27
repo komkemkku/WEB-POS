@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     userTableBody.innerHTML = "";
     emptyUserAlert.classList.add("d-none");
     try {
-      const res = await fetch("http://localhost:3000/api/users", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/users", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = document.getElementById("password").value;
     if (password) body.password = password;
     try {
-      let url = "http://localhost:3000/api/users";
+      let url = "https://api-pos-production-751a.up.railway.app/api/users";
       let method = "POST";
       if (id) {
         url += "/" + id;
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!userToDeleteId) return;
     try {
       const res = await fetch(
-        `http://localhost:3000/api/users/${userToDeleteId}`,
+        `https://api-pos-production-751a.up.railway.app/api/users/${userToDeleteId}`,
         {
           method: "DELETE",
           headers: { Authorization: "Bearer " + token },

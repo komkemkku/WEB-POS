@@ -45,13 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let cart = [];
   let customers = [];
 
-  const API_URL = "http://localhost:3000/api";
+  const API_URL = "https://api-pos-production-751a.up.railway.app/api";
   let accessToken = localStorage.getItem("token") || "";
 
   // --- Load customers ---
   async function loadCustomers() {
     try {
-      const res = await fetch("http://localhost:3000/api/customers", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/customers", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     productLoading.classList.remove("d-none");
     productNotFound.classList.add("d-none");
     try {
-      let url = "http://localhost:3000/api/products";
+      let url = "https://api-pos-production-751a.up.railway.app/api/products";
       if (keyword && keyword.trim() !== "")
         url += `?q=${encodeURIComponent(keyword)}`;
       const res = await fetch(url, {
@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       // ส่งไป backend ให้สอดคล้องกับ sales/sale_items
-      const res = await fetch("http://localhost:3000/api/sales", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/sales", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // --- ส่วนแสดงประวัติการขาย (Sales History) ---
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://api-pos-production-751a.up.railway.app/api";
 let accessToken = localStorage.getItem("token") || "";
 
 let salesData = [];

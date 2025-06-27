@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // โหลดหมวดหมู่
   async function loadCategories() {
-    const res = await fetch("http://localhost:3000/api/categories", {
+    const res = await fetch("https://api-pos-production-751a.up.railway.app/api/categories", {
       headers: { Authorization: "Bearer " + token },
     });
     const data = await res.json();
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadProducts(page = 1) {
     currentSearch = searchInput.value.trim();
     currentCategory = categoryFilter.value;
-    let url = `http://localhost:3000/api/products?page=${page}&pageSize=${pageSize}`;
+    let url = `https://api-pos-production-751a.up.railway.app/api/products?page=${page}&pageSize=${pageSize}`;
     if (currentSearch) url += `&search=${encodeURIComponent(currentSearch)}`;
     if (currentCategory) url += `&category_id=${currentCategory}`;
     const res = await fetch(url, {
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     try {
-      const res = await fetch("http://localhost:3000/api/stock-movements", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/stock-movements", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function loadHistoryPage(page = 1) {
       const res = await fetch(
-        `http://localhost:3000/api/stock-movements?product_id=${prod.id}&page=${page}&pageSize=${historyPageSize}`,
+        `https://api-pos-production-751a.up.railway.app/api/stock-movements?product_id=${prod.id}&page=${page}&pageSize=${historyPageSize}`,
         {
           headers: { Authorization: "Bearer " + token },
         }

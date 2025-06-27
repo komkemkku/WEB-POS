@@ -1,4 +1,4 @@
-const API_URL = "http://api-pos-production-751a.up.railway.app/api";
+const API_URL = "https://api-pos-production-751a.up.railway.app/api";
 let accessToken = localStorage.getItem("token") || "";
 
 let products = [];

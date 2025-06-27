@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     categoryTableBody.innerHTML = "";
     emptyCategoryAlert.classList.add("d-none");
     try {
-      const res = await fetch("http://localhost:3000/api/categories", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/categories", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
       is_active: document.getElementById("catStatus").value === "true",
     };
     try {
-      let url = "http://localhost:3000/api/categories";
+      let url = "https://api-pos-production-751a.up.railway.app/api/categories";
       let method = "POST";
       if (id) {
         url += "/" + id;
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!categoryToDeleteId) return;
       try {
         const res = await fetch(
-          `http://localhost:3000/api/categories/${categoryToDeleteId}`,
+          `https://api-pos-production-751a.up.railway.app/api/categories/${categoryToDeleteId}`,
           {
             method: "DELETE",
             headers: { Authorization: "Bearer " + token },

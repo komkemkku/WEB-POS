@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // โหลด settings
   async function loadSettings() {
     try {
-      const res = await fetch("http://localhost:3000/api/settings", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/settings", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (el) settings[key] = el.value;
     });
     try {
-      const res = await fetch("http://localhost:3000/api/settings", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/settings", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

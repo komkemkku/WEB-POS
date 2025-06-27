@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // โหลดสินค้าทั้งหมด
   async function loadProducts() {
     try {
-      const res = await fetch("http://localhost:3000/api/products", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/products", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
     promotionTableBody.innerHTML = "";
     emptyPromotionAlert.classList.add("d-none");
     try {
-      const res = await fetch("http://localhost:3000/api/promotions", {
+      const res = await fetch("https://api-pos-production-751a.up.railway.app/api/promotions", {
         headers: { Authorization: "Bearer " + token },
       });
       const data = await res.json();
@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
       rewards = promo.rewards || [];
     } else {
       const res = await fetch(
-        `http://localhost:3000/api/promotions/${promo.id}/detail`,
+        `https://api-pos-production-751a.up.railway.app/api/promotions/${promo.id}/detail`,
         {
           headers: { Authorization: "Bearer " + token },
         }
@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })),
     };
     try {
-      let url = "http://localhost:3000/api/promotions";
+      let url = "https://api-pos-production-751a.up.railway.app/api/promotions";
       let method = "POST";
       if (id) {
         url += "/" + id;
@@ -408,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!promoToDeleteId) return;
     try {
       const res = await fetch(
-        `http://localhost:3000/api/promotions/${promoToDeleteId}`,
+        `https://api-pos-production-751a.up.railway.app/api/promotions/${promoToDeleteId}`,
         {
           method: "DELETE",
           headers: { Authorization: "Bearer " + token },
