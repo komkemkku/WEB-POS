@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dev Journey POS | ขายสินค้า</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f6f8fa;
+        }
+
+        .cart-table td,
+        .cart-table th {
+            vertical-align: middle;
+        }
+
+        .cart-table input[type="number"] {
+            width: 60px;
+        }
+
+        .cart-table input[type="text"] {
+            width: 100px;
+        }
+
+        .product-btn {
+            min-width: 120px;
+            margin: 2px;
+        }
+
+        .category-btn {
+            margin-right: 5px;
+            margin-bottom: 8px;
+        }
+
+        .cart-panel {
+            max-height: 64vh;
+            overflow-y: auto;
+        }
+
+        .summary-panel {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px #0001;
+        }
+
+        .btn-checkout {
+            font-size: 1.3rem;
+            padding: 16px 0;
+        }
+
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+
+        .modal {
+            z-index: 1050 !important;
+        }
+
+        .btn-category {
+            font-size: 1.1rem;
+            border-radius: 2rem;
+            min-width: 130px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px #2c7be040;
+        }
+
+        .btn-category.active,
+        .btn-category:focus,
+        .btn-category:hover {
+            background: #1654a0 !important;
+            color: #fff !important;
+            border-color: #1654a0 !important;
+            box-shadow: 0 4px 18px #2c7be055;
+            transform: translateY(-2px) scale(1.04);
+        }
+
+        #categoryList .category-btn {
+            border-radius: 1.5rem;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        #categoryList .category-btn.active,
+        #categoryList .category-btn:focus {
+            background: #0d6efd;
+            color: #fff;
+            box-shadow: 0 2px 8px #0001;
+        }
+
+        #productList .product-card {
+            border-radius: 1.2rem;
+            box-shadow: 0 2px 8px #d0d5dc33;
+            transition: transform 0.09s;
+            cursor: pointer;
+        }
+
+        #productList .product-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 18px #0d6efd24;
+            border-color: #0d6efd;
+        }
+
+        @media (max-width: 991px) {
+            .cart-panel {
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-0">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand d-flex align-items-center" href="/frontend/main.html">
+                <img src="https://img.icons8.com/fluency/48/pos-terminal.png" alt="POS Logo" width="40" class="me-2">
+                <span class="fw-bold text-primary fs-4">Dev Journey POS</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <button class="btn btn-outline-primary btn-sm me-3 d-none" id="backBtn">
+                    <i class="bi bi-tools"></i> หลังบ้าน
+                </button>
+                <span class="me-3 fw-semibold text-dark" id="userGreeting"></span>
+                <button class="btn btn-outline-danger btn-sm ms-2" id="logoutBtn" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                </button>
+                <script>
+                    function logout() {
+                        localStorage.removeItem('token');
+                        window.location.href = '/index.html';
+                    }
+                </script>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-3">
+        <div class="row g-3">
+            <!-- Left: Search, Category, Product List -->
+            <div class="col-lg-7">
+                <div class="mb-3">
+                    <input type="text" id="searchInput" class="form-control form-control-lg shadow-sm rounded-pill px-4"
+                        placeholder="🔍 ค้นหาชื่อสินค้า หรือสแกนบาร์โค้ด..." autocomplete="off"
+                        style="font-size:1.1rem;">
+                </div>
+
+                <!-- ปุ่มหมวดหมู่ (Category) -->
+                <div id="categoryList" class="mb-3 d-flex flex-wrap gap-2"></div>
+
+                <!-- รายการสินค้า -->
+                <div id="productList" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <!-- สินค้าจะถูกแสดงที่นี่โดย JavaScript -->
+                </div>
+            </div>
+
+            <!-- Right: Cart -->
+            <div class="col-lg-5">
+                <div class="summary-panel p-4 mb-4 shadow cart-panel">
+                    <h5 class="mb-3">ตะกร้าสินค้า</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm cart-table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>สินค้า</th>
+                                    <th>จำนวน</th>
+                                    <th>หมายเหตุ</th>
+                                    <th>ลบ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cartTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="mb-2">
+                        <button class="btn btn-outline-danger btn-sm" onclick="clearCart()">
+                            <i class="bi bi-trash"></i> ยกเลิกบิลทั้งหมด
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="mb-2">
+                        <label class="form-label">ลูกค้า</label>
+                        <select class="form-select" id="customerSelect"></select>
+                        <div class="form-text text-info" id="customerPointInfo"></div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">โปรโมชัน/โค้ดส่วนลด</label>
+                        <select class="form-select" id="promotionSelect"></select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">ใช้พ้อยท์แลกส่วนลด</label>
+                        <div class="input-group">
+                            <input type="number" min="0" step="1" id="redeemPointInput" class="form-control" value="0"
+                                disabled>
+                            <button class="btn btn-outline-primary" type="button" id="btnRedeemPoint" disabled>ใช้พ้อยท์
+                            </button>
+                        </div>
+                        <div class="form-text text-success" id="redeemPointInfo"></div>
+                    </div>
+                    <div class="d-flex justify-content-between fs-5">
+                        <div>รวมทั้งหมด</div>
+                        <div><b id="cartTotal">0.00</b> บาท</div>
+                    </div>
+                    <div class="mt-2">
+                        <label>รับเงิน (บาท):</label>
+                        <input type="number" id="receivedAmount" class="form-control form-control-sm" value="0" min="0">
+                        <div class="text-success mt-1">
+                            เงินทอน: <b id="changeAmount">0.00</b> บาท
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-4">
+                        <button id="btnCheckout" class="btn btn-success btn-checkout" onclick="checkout()"
+                            type="button">
+                            <i class="bi bi-cash-coin"></i> จบการขาย / รับเงิน
+                        </button>
+                    </div>
+                    <div class="alert alert-success mt-3 d-none" id="saleSuccess"></div>
+                    <div class="alert alert-danger mt-3 d-none" id="saleError"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="receiptModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" id="receiptContent">
+                <!-- ใบเสร็จจะแสดงที่นี่ -->
+            </div>
+        </div>
+    </div>
+    <footer class="text-center text-muted py-4 small mt-5">
+        &copy; 2025 Dev Journey
+    </footer>
+
+    <!-- Bootstrap 5 JS and Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/frontend/js/main.js"></script>
+</body>
+
+</html>

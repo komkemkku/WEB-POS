@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Journey POS - จัดการหมวดหมู่สินค้า</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/backoffice.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-backoffice">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="backoffice.html">
+                <img src="https://img.icons8.com/fluency/48/pos-terminal.png" alt="POS Logo" width="40" class="me-2">
+                <span class="fw-bold text-primary fs-4">Dev Journey POS</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <button class="btn btn-outline-secondary btn-sm me-3" id="posBtn">
+                    <i class="bi bi-shop"></i> กลับหน้าขาย
+                </button>
+                <span class="me-3 fw-semibold text-dark" id="userGreeting"></span>
+                <button class="btn btn-outline-danger btn-sm ms-2" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="card rounded-4 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                            <h3 class="fw-bold text-primary mb-0">
+                                <i class="bi bi-list-ul"></i> จัดการหมวดหมู่สินค้า
+                            </h3>
+                            <button class="btn btn-success rounded-pill" data-bs-toggle="modal"
+                                data-bs-target="#addCategoryModal">
+                                <i class="bi bi-plus-circle"></i> เพิ่มหมวดหมู่
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle" id="categoryTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ชื่อหมวดหมู่</th>
+                                        <th>สถานะ</th>
+                                        <th>จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="categoryTableBody">
+                                    <!-- แสดงข้อมูลที่นี่ -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-info mt-3 d-none" id="emptyCategoryAlert">
+                            <i class="bi bi-info-circle"></i> ยังไม่มีหมวดหมู่ในระบบ
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal เพิ่ม/แก้ไข -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <form class="modal-content" id="categoryForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">เพิ่มหมวดหมู่</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">ชื่อหมวดหมู่</label>
+                        <input type="text" class="form-control" id="catName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">สถานะ</label>
+                        <select class="form-select" id="catStatus">
+                            <option value="true" selected>เปิดใช้งาน</option>
+                            <option value="false">ปิดใช้งาน</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="catId">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal ลบ -->
+    <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ยืนยันการลบหมวดหมู่</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    คุณแน่ใจหรือไม่ว่าต้องการลบหมวดหมู่นี้?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button class="btn btn-danger" id="confirmDeleteBtn">ลบ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-muted py-4 small mt-5">
+        &copy; 2025 Dev Journey
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/frontend/js/categories.js"></script>
+</body>
+
+</html>

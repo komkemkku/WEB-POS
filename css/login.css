@@ -1,0 +1,23 @@
+body.bg-login {
+  background: linear-gradient(135deg, #eaf6ff 0%, #d9e7ff 100%);
+}
+
+.login-card {
+  border-radius: 2rem !important;
+  box-shadow: 0 6px 24px rgba(40, 90, 170, 0.12);
+  background: #fff;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #3f8cff 40%, #1b6be2 100%);
+  border: none;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background: linear-gradient(90deg, #1b6be2 0%, #3f8cff 100%);
+}
+
+input.form-control:focus {
+  border-color: #3f8cff;
+  box-shadow: 0 0 0 0.15rem rgba(63, 140, 255, 0.15);
+}

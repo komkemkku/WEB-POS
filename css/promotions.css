@@ -1,0 +1,21 @@
+body.bg-main {
+  background: #f6f9ff;
+}
+.card {
+  border-radius: 1.5rem;
+}
+.btn-success,
+.btn-primary {
+  border-radius: 1rem;
+}
+.table {
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+/* ทำให้ไอคอน modal delete ดูเด่น */
+.modal-content .bi-exclamation-triangle-fill {
+  font-size: 2.7rem;
+  margin-bottom: 0.5rem;
+}

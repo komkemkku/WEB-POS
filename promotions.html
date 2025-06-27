@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Journey POS - จัดการโปรโมชั่น</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/frontend/css/promotions.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-main">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="backoffice.html">
+                <img src="https://img.icons8.com/fluency/48/pos-terminal.png" alt="POS Logo" width="40" class="me-2">
+                <span class="fw-bold text-primary fs-4">Dev Journey POS</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <button class="btn btn-outline-secondary btn-sm me-3" id="posBtn">
+                    <i class="bi bi-shop"></i> กลับหน้าขาย
+                </button>
+                <span class="me-3 fw-semibold text-dark" id="userGreeting"></span>
+                <button class="btn btn-outline-danger btn-sm ms-2" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="fw-bold text-primary"><i class="bi bi-gift"></i> จัดการโปรโมชั่น</h2>
+            <button class="btn btn-success" id="addPromotionBtn"><i class="bi bi-plus-lg"></i> เพิ่มโปรโมชัน</button>
+        </div>
+        <div class="card shadow-sm rounded-4">
+            <div class="card-body">
+                <div id="emptyPromotionAlert" class="alert alert-info text-center d-none"></div>
+                <div class="table-responsive">
+                    <table class="table align-middle table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>ชื่อโปรโมชั่น</th>
+                                <th>รายละเอียด</th>
+                                <th>รายการสินค้าเข้าร่วม</th>
+                                <th>ของรางวัล/ส่วนลด</th>
+                                <th>เริ่ม</th>
+                                <th>สิ้นสุด</th>
+                                <th>สถานะ</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="promotionTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal ฟอร์ม (เหมือนเดิม เพิ่มส่วนแสดงสินค้า/รางวัล) -->
+    <div class="modal fade" id="addPromotionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <form class="modal-content" id="promotionForm" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPromotionModalLabel">เพิ่มโปรโมชั่นใหม่</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <input type="hidden" id="promoId">
+                        <div class="col-md-6">
+                            <label>ชื่อโปรโมชั่น <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="promoName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label>สถานะ</label>
+                            <select class="form-select" id="promoStatus">
+                                <option value="true">เปิดใช้งาน</option>
+                                <option value="false">ปิดใช้งาน</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label>รายละเอียด</label>
+                            <textarea class="form-control" id="promoDetail"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label>วันเริ่ม</label>
+                            <input type="date" class="form-control" id="promoStartDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label>วันสิ้นสุด</label>
+                            <input type="date" class="form-control" id="promoEndDate">
+                        </div>
+                        <div class="col-12">
+                            <label>เลือกสินค้าเข้าร่วมโปรโมชัน</label>
+                            <select class="form-select" id="promoProductSelect" multiple></select>
+                            <div class="form-text">กด Ctrl/Command เพื่อเลือกได้หลายรายการ</div>
+                            <div id="promoProductList"></div>
+                        </div>
+                        <div class="col-12">
+                            <label>ของรางวัล/ส่วนลด</label>
+                            <div id="rewardList"></div>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addRewardBtn">
+                                <i class="bi bi-plus"></i> เพิ่มของรางวัล/ส่วนลด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Modal: Confirm Delete -->
+    <div class="modal fade" id="deletePromotionModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-header border-0 flex-column">
+                    <span class="mt-2">
+                        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size:2.7rem;"></i>
+                    </span>
+                    <h5 class="modal-title mt-2 text-danger fw-bold">ยืนยันลบโปรโมชั่น</h5>
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-2"
+                        data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0 fs-5">คุณต้องการลบโปรโมชั่นนี้ใช่หรือไม่?<br>
+                        <span class="text-danger fw-semibold">(ลบแล้วไม่สามารถกู้คืนได้)</span>
+                    </p>
+                </div>
+                <div class="modal-footer justify-content-center border-0 pb-4">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> ยกเลิก
+                    </button>
+                    <button type="button" class="btn btn-danger rounded-pill px-4" id="confirmDeleteBtn">
+                        <i class="bi bi-trash"></i> ลบ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-muted py-4 small mt-5">
+        &copy; 2025 Dev Journey
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/frontend/js/promotions.js"></script>
+</body>
+
+</html>

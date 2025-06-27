@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Journey POS - ประวัติการขาย</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/frontend/backoffice.html">
+                <img src="https://img.icons8.com/fluency/48/pos-terminal.png" width="40" class="me-2">
+                <span class="fw-bold text-primary fs-4">Dev Journey POS</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <a href="backoffice.html" class="btn btn-outline-secondary btn-sm me-3">กลับหลังบ้าน</a>
+                <span class="me-3 fw-semibold text-dark" id="userGreeting"></span>
+                <button class="btn btn-outline-danger btn-sm ms-2" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <h2>ประวัติการขาย</h2>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered align-middle">
+                    <thead>
+                        <tr>
+                            <th>วันที่</th>
+                            <th>เลขใบเสร็จ</th>
+                            <th>ลูกค้า</th>
+                            <th>รวม</th>
+                            <th>แคชเชียร์</th>
+                            <th>ดูรายละเอียด</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesTableBody">
+                        <!-- JS จะเติมข้อมูลตรงนี้ -->
+                    </tbody>
+                </table>
+                <!-- Pagination -->
+                <nav>
+                    <ul class="pagination justify-content-center my-2" id="salesPagination">
+                        <!-- JS จะเติม pagination -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- Modal รายละเอียดบิล -->
+        <div class="modal fade" id="saleDetailModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">รายละเอียดบิล</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="saleItems"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="text-center text-muted py-4 small mt-5">&copy; 2025 Dev Journey</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/frontend/js/sales.js"></script>
+</body>
+
+</html>

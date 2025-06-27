@@ -1,0 +1,9 @@
+.card-menu {
+  transition: transform 0.1s, box-shadow 0.1s;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.card-menu:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 8px 20px #0001;
+}

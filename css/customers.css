@@ -1,0 +1,9 @@
+.card {
+  border-radius: 1.2rem;
+}
+.btn {
+  border-radius: 1.5rem;
+}
+.table > :not(:first-child) {
+  border-top: 2px solid #eee;
+}
