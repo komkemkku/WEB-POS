@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loginAlert.classList.add("d-none");
 
     try {
-      const response = await fetch("http://api-pos-production-751a.up.railway.app/api/login", {
+      const response = await fetch("https://api-pos-production-751a.up.railway.app/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("token", data.token);
         localStorage.setItem("name", data.name);
         localStorage.setItem("role", data.role);
-        window.location.href = "/frontend/main.html";
+        window.location.href = "/main.html";
       } else {
         showAlert(data.message || "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
         passwordInput.value = "";
